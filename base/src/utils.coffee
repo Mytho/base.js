@@ -5,7 +5,6 @@ define ->
   # Your class can extend this simple `Events` class to support events by
   # itself. The events class also accepts an object containing a map of
   # 'name/function'-pairs.
-  #
   class Events
     __events: {}
     __map: (map) -> @on(name, fn) for fn, name in map

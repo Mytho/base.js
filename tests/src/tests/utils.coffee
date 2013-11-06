@@ -1,4 +1,4 @@
-define ['../test', '../../../base/lib/utils'], (Test, Utils) ->
+define ['../classes/test', '../../../base/lib/utils'], (Test, Utils) ->
 
   class TestUtils extends Test
     default: false
