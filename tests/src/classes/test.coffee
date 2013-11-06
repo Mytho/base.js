@@ -9,6 +9,7 @@ define ->
   ###
 
   class Test
+
     regex: /^test.*$/
     run: =>
       @setUp()

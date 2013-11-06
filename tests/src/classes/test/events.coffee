@@ -1,6 +1,7 @@
-define ['../classes/test', '../../../base/lib/classes/events'], (Test, Events) ->
+define ['../test', '../../../../base/lib/classes/events'], (Test, Events) ->
 
-  class TestClasses extends Test
+  class TestEvents extends Test
+
     default: false
     setUp: -> @variable = @default
     tearDown: -> @variable = @default
@@ -16,4 +17,4 @@ define ['../classes/test', '../../../base/lib/classes/events'], (Test, Events) -
       events.trigger 'test'
       ok not @variable
 
-  TestClasses
+  TestEvents

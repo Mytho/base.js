@@ -9,6 +9,7 @@ define ->
   ###
 
   class Events
+
     __events: {}
     __map: (map) -> @on(name, fn) for fn, name in map
     off: (name) -> @__events[name] = []
