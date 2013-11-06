@@ -1,3 +1,3 @@
-requirejs ['tests/utils'], (tests...) ->
+requirejs ['tests/classes'], (tests...) ->
 
   (new Test).run() for Test in tests
