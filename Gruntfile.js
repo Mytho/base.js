@@ -47,7 +47,7 @@ module.exports = function(grunt) {
 
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> ~ Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> ~ Released under <%= pkg.license %> license */\n'
+                banner: '/*! <%= pkg.name %> ~ Released under <%= pkg.license %> license ~ Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> */\n'
             },
             base: {
                 files: [{
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
         watch: {
             base: {
                 files: ['<%= cnf.base.src %>/**/*.coffee'],
-                tasks: ['cleanBase', 'coffee:base', 'uglify:base', 'clean:afterBase']
+                tasks: ['clean:beforeBase', 'coffee:base', 'uglify:base', 'clean:afterBase']
             },
             tests: {
                 files: ['<%= cnf.tests.src %>/**/*.coffee'],

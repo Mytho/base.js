@@ -9,12 +9,6 @@
   Copyright (c) 2013 Teun Zengerink
 ###
 
-requirejs.config(
-  paths
-    tests: '../../classes'
-    classes: '../../../../base/lib/classes'
-)
-
 requirejs [
   'classes/test/events'
 ], (tests...) -> (new Test).run() for Test in tests

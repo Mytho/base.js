@@ -14,6 +14,10 @@ define -> class Events
 
   __events: {}
   __map: (map) -> @on(name, fn) for fn, name in map
+
+  # TODO: Add bind/unbind/fire functionality
+
+  # Offer simple PubSub functionality.
   off: (name) -> @__events[name] = []
   on: (name, fn) ->
     @__map(name) if typeof name is 'object'

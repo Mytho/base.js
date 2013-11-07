@@ -7,8 +7,8 @@
 ###
 
 define [
-  'tests/test',
-  'classes/events'
+  '../../classes/test',
+  '../../../../base/lib/classes/events'
 ], (
   Test,
   Events
@@ -16,17 +16,20 @@ define [
 
   default: false
   setUp: -> @variable = @default
-  tearDown: -> @variable = @default
+
+  # Test on/off/trigger functionality
   testEventsOn: ->
     events = new Events
-    events.on 'test', => @variable = true
+    events.on 'test', -> @variable = not @default
     events.trigger 'test'
-    ok @variable
+    equal @variable, not @default
   testEventsOff: ->
     events = new Events
-    events.on 'test', => @variable = true
+    events.on 'test', -> @variable = not @default
     events.off 'test'
     events.trigger 'test'
-    ok not @variable
+    equal @variable, @default
+
+  # TODO: Test event mapping functionality
 
 TestEvents
