@@ -13,14 +13,13 @@
 define -> class Test
 
   regex: /^test.*$/
-  run: =>
-    @setUp()
-    for name of @
-      @runTest(name) if @shouldRun(name)
-    @tearDown()
-  shouldRun: (name) -> name.match @regex
+  run: (name) ->
+    if name.match @regex
+      @setUp()
+      test(name, => @[name]())
+      @tearDown()
+  runAll: -> @run(name) for name of @
   setUp: -> false
   tearDown: -> false
-  runTest: (name) -> test(name, @[name])
 
 Test
