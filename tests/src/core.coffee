@@ -11,4 +11,4 @@
 
 requirejs [
   'classes/test/events'
-], (tests...) -> (new Test).run() for Test in tests
+], (tests...) -> (new Test).runAll() for Test in tests
