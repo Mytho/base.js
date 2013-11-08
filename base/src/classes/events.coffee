@@ -13,61 +13,61 @@
 define -> class Events
 
   # Event handlers for the events bound to elements.
-  __handlers: {}
+  _handlers: {}
 
   # List of PubSub events.
-  __events: {}
+  _events: {}
 
   # Map an object of 'name/function'-pair events.
-  __mapOn: (map) -> @on(name, fn) for name, fn of map
-  __mapTrigger: (names, args...) -> @trigger(name, args) for name in names
-  __mapOff: (names) -> @off(name) for name in names
-  __mapBind: (element, map) -> @bind(element, name, fn) for name, fn of map
-  __mapFire: (element, names) -> @fire(element, name) for name in names
-  __mapUnbind: (element, names) -> @unbind(element, name) for name in names
+  _mapOn: (map) -> @on(name, fn) for name, fn of map
+  _mapTrigger: (names, args...) -> @trigger(name, args) for name in names
+  _mapOff: (names) -> @off(name) for name in names
+  _mapBind: (element, map) -> @bind(element, name, fn) for name, fn of map
+  _mapFire: (element, names) -> @fire(element, name) for name in names
+  _mapUnbind: (element, names) -> @unbind(element, name) for name in names
 
   # Add options to bind events to elements.
   bind: (element, name, fn) ->
-    @__mapBind element, name if typeof name is 'object'
-    @__handlers[element] = {} if typeof @__handlers[element] is 'undefined'
-    @__handlers[element][name] = [] if typeof @__handlers[element][name] is 'undefined'
-    @__handlers[element][name].push fn
+    @_mapBind element, name if typeof name is 'object'
+    @_handlers[element] = {} if typeof @_handlers[element] is 'undefined'
+    @_handlers[element][name] = [] if typeof @_handlers[element][name] is 'undefined'
+    @_handlers[element][name].push fn
     if element.addEventListener
       element.addEventListener name, fn, false
     else
       element.attachEvent "on#{name}", fn
     @
   fire: (element, name, args...) ->
-    @__mapFire(element, name) if typeof name is 'object'
-    if @__handlers[element] and @__handlers[element][name]
-      fn.apply(@, args) for fn in @__handlers[element][name]
+    @_mapFire(element, name) if typeof name is 'object'
+    if @_handlers[element] and @_handlers[element][name]
+      fn.apply(@, args) for fn in @_handlers[element][name]
     @
   unbind: (element, name) ->
-    @__mapUnbind(element, name) if typeof name is 'object'
-    if @__handlers[element] and @__handlers[element][name]
-      for fn in @__handlers[element][name]
+    @_mapUnbind(element, name) if typeof name is 'object'
+    if @_handlers[element] and @_handlers[element][name]
+      for fn in @_handlers[element][name]
         if element.removeEventListener
           element.removeEventListener name, fn, false
         else
           element.detachEvent name, fn
-        @__handlers[element][name] = []
+        @_handlers[element][name] = []
     @
 
   # Add simple PubSub-functionality to the class.
   off: (name) ->
-    @__mapOff(name) if typeof name is 'object'
-    @__events[name] = []
+    @_mapOff(name) if typeof name is 'object'
+    @_events[name] = []
     @
   on: (name, fn) ->
-    @__mapOn(name) if typeof name is 'object'
-    @__events[name] = [] if typeof @__events[name] is 'undefined'
-    @__events[name].push fn
+    @_mapOn(name) if typeof name is 'object'
+    @_events[name] = [] if typeof @_events[name] is 'undefined'
+    @_events[name].push fn
     @
   trigger: (name, args...) ->
     if typeof name is 'object'
-      @__mapTrigger(name, args) 
+      @_mapTrigger(name, args) 
     else
-      fn.apply(@, args) for fn in @__events[name]
+      fn.apply(@, args) for fn in @_events[name]
     @
 
 Events
