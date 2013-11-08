@@ -11,10 +11,10 @@
 define -> class Url
 
   # Strip leading and trailing slashes of a given string.
-  __stripSlashes: (str) -> str.replace /^\/|\/$/g, ''
+  __normalize: (str) -> str.replace /^\/|\/$/g, ''
 
   # Set the base URI when it is provided
-  constructor: (baseUri = '') -> @baseUri = @__stripSlashes baseUri
+  constructor: (baseUri = '') -> @baseUri = @__normalize baseUri
 
   # Get the base URL for the application.
   base: (protocol = '') ->
@@ -22,6 +22,6 @@ define -> class Url
     "#{protocol}://#{window.location.host}#{if @baseUri then '/' else ''}#{@baseUri}"
 
   # Get a full application URL for a given URI.
-  site: (uri, protocol) -> "#{@base protocol}/#{@__stripSlashes uri}"
+  site: (uri, protocol) -> "#{@base protocol}/#{@__normalize uri}"
 
 Url
