@@ -27,7 +27,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.base.src %>/',
-                    src: ['*.coffee', '**/*.coffee'],
+                    src: ['**/*.coffee'],
                     dest: '<%= cnf.base.build %>/',
                     ext: '.js'
                 }]
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.tests.src %>/',
-                    src: ['core.coffee', 'config.coffee', '**/*.coffee'],
+                    src: ['**/*.coffee', '!example.config.coffee'],
                     dest: '<%= cnf.tests.build %>/',
                     ext: '.js'
                 }]
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.base.build %>/',
-                    src: ['*.js', '**/*.js'],
+                    src: ['**/*.js'],
                     dest: '<%= cnf.base.lib %>/'
                 }]
             },
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.tests.build %>/',
-                    src: ['core.js', 'config.js', '**/*.js'],
+                    src: ['**/*.js'],
                     dest: '<%= cnf.tests.lib %>/'
                 }]
             }
