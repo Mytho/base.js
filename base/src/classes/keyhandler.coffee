@@ -9,7 +9,7 @@
 ###
 
 
-define ['../../lib/classes/events'], (Events) -> class KeyHandler extends Events
+define ['./events'], (Events) -> class KeyHandler extends Events
 
   keys:
     8:'backspace', 9:'tab', 13:'enter', 16:'shift', 17:'ctrl', 18:'alt', 
@@ -27,7 +27,12 @@ define ['../../lib/classes/events'], (Events) -> class KeyHandler extends Events
     # Numpad
     96:'num0', 97:'num1', 98:'num2', 99:'num3', 100:'num4', 101:'num5',
     102:'num6', 103:'num7', 104:'num8', 105:'num9'
-  constructor: -> @bind document, 'keyup', (e) => @handler e
-  handler: -> @fire keys[e.keyCode] if not /input|textarea|select/i.test((e.target or e.srcElement).nodeName)
+  handler: (event) -> @fire keys[event.keyCode] if not /input|textarea|select/i.test((event.target or event.srcElement).nodeName)
+  off: (name) -> 
+    @unbind document, 'keyup', @handler
+    super name
+  on: (name, fn) ->
+    @bind document, 'keyup', @handler
+    super name, fn
 
 KeyHandler

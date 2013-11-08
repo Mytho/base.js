@@ -14,6 +14,7 @@ define [
   KeyHandler
 ) -> class TestKeyHandler extends Test
 
+  name: 'TestKeyHandler'
   default: false
   variable: false
   setUp: -> @variable = @default
@@ -30,7 +31,5 @@ define [
     keyHandler.off 'space'
     keyHandler.trigger 'space'
     equal @variable, @default
-
-  # TODO: Tests throws global failure on keypress, fix it
 
 TestKeyHandler

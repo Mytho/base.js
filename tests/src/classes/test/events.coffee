@@ -14,6 +14,7 @@ define [
   Events
 ) -> class TestEvents extends Test
 
+  name: 'TestEvents'
   default: false
   varOne: false
   varTwo: false

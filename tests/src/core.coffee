@@ -10,7 +10,7 @@
 ###
 
 requirejs [
-  'classes/test/events',
-  'classes/test/keyhandler',
+  './classes/test/events',
+  './classes/test/keyhandler',
 ], (tests...) -> 
   (new Test).runAll() for Test in tests
