@@ -12,5 +12,6 @@
 requirejs [
   './classes/test/events',
   './classes/test/keyhandler',
+  './classes/test/url',
 ], (tests...) -> 
   (new Test).runAll() for Test in tests
