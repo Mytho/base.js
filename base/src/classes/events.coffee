@@ -32,9 +32,11 @@ define -> class Events
       element.addEventListener name, fn, false
     else
       element.attachEvent "on#{name}", fn
+    @
   fire: (element, name, args...) ->
     if @__handlers[element] and @__handlers[element][name]
       fn.apply(@, args) for fn in @__handlers[element][name]
+    @
   unbind: (element, name) ->
     if @__handlers[element] and @__handlers[element][name]
       for fn in @__handlers[element][name]
@@ -43,13 +45,19 @@ define -> class Events
         else
           element.detachEvent name, fn
         @__handlers[element][name] = []
+    @
 
   # Add simple PubSub-functionality to the class.
-  off: (name) -> @__events[name] = []
+  off: (name) ->
+    @__events[name] = []
+    @
   on: (name, fn) ->
     @__mapOn(name) if typeof name is 'object'
     @__events[name] = [] if typeof @__events[name] is 'undefined'
     @__events[name].push fn
-  trigger: (name, args...) -> fn.apply(@, args) for fn in @__events[name]
+    @
+  trigger: (name, args...) ->
+    fn.apply(@, args) for fn in @__events[name]
+    @
 
 Events
