@@ -15,20 +15,15 @@ define [
 ) -> class TestUrl extends Test
 
   name: 'TestUrl'
-  baseOne: 'some/base'
-  baseTwo: 'some/other/base/'
   uriOne: 'some/longer/uri'
   uriTwo: '/some/longer/uri/'
+  uriThree: 'some/longer/uri/'
 
-  testBase: ->
-    urlOne = new Url @baseOne
-    urlTwo = new Url @baseTwo
-    equal urlOne.base(), "#{window.location.protocol}//#{window.location.host}/#{@baseOne}"
-    equal urlTwo.base(), "#{window.location.protocol}//#{window.location.host}/#{@baseTwo.replace /^\/|\/$/g, ''}"
+  testBase: -> equal (new Url).base(), "#{window.location.protocol}//#{window.location.host}#{require.toUrl ''}"
   testSite: ->
-    urlOne = new Url @baseOne
-    urlTwo = new Url @baseTwo
-    equal urlOne.site(@uriOne), "#{window.location.protocol}//#{window.location.host}/#{@baseOne}/#{@uriOne}"
-    equal urlTwo.site(@uriTwo), "#{window.location.protocol}//#{window.location.host}/#{@baseTwo.replace /^\/|\/$/g, ''}/#{@uriTwo.replace /^\/|\/$/g, ''}"
+    url = new Url
+    equal url.site(@uriOne), "#{window.location.protocol}//#{window.location.host}#{require.toUrl ''}#{@uriOne}"
+    equal url.site(@uriTwo), "#{window.location.protocol}//#{window.location.host}#{require.toUrl ''}#{@uriTwo.replace /^\/|\/$/g, ''}"
+    equal url.site(@uriThree), "#{window.location.protocol}//#{window.location.host}#{require.toUrl ''}#{@uriThree.replace /^\/|\/$/g, ''}"
 
 TestUrl
