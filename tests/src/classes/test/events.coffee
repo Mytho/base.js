@@ -7,29 +7,66 @@
 ###
 
 define [
-  '../../classes/test',
-  '../../../../base/lib/classes/events'
+  'tests/test',
+  'classes/events',
 ], (
   Test,
   Events
 ) -> class TestEvents extends Test
 
+  name: 'TestEvents'
   default: false
-  setUp: -> @variable = @default
+  varOne: false
+  varTwo: false
+  setUp: -> @varOne = @varTwo = @default
 
-  # Test on/off/trigger functionality
-  testEventsOn: ->
+  testBind: ->
     events = new Events
-    events.on 'test', -> @variable = not @default
-    events.trigger 'test'
-    equal @variable, not @default
-  testEventsOff: ->
+    el = document.getElementsByTagName('html')[0]
+    events.bind el, 'click', (arg) => @varOne = arg
+    events.fire el, 'click', 'some-test-string'
+    events.unbind el, 'click'
+    equal @varOne, 'some-test-string'
+  testBindMap: ->
     events = new Events
-    events.on 'test', -> @variable = not @default
+    element = document.getElementsByTagName('html')[0]
+    events.bind element,
+      mouseenter: => @varOne = 'some-test-string'
+      mouseleave: => @varTwo = 'some-test-string'
+    events.fire element, 'mouseenter'
+    events.fire element, 'mouseleave'
+    events.unbind element, 'mouseenter'
+    events.unbind element, 'mouseleave'
+    equal @varOne, 'some-test-string'
+    equal @varTwo, 'some-test-string'
+  testUnbind: ->
+    events = new Events
+    el = document.getElementsByTagName('html')[0]
+    events.bind el, 'click', => @varOne = not @default
+    events.unbind el, 'click'
+    events.fire el, 'click'
+    equal @varOne, @default
+  testOn: ->
+    events = new Events
+    events.on 'test', (arg) => @varOne = arg
+    events.trigger 'test', 'some-test-string'
+    equal @varOne, 'some-test-string' 
+  testOnMap: ->
+    events = new Events
+    events.on
+      testOne: => @varOne = 'some-test-string'
+      testTwo: => @varTwo = 'some-test-string'
+    events.trigger 'testOne'
+    events.trigger 'testTwo'
+    events.off 'testOne'
+    events.off 'testTwo'
+    equal @varOne, 'some-test-string'
+    equal @varTwo, 'some-test-string'
+  testOff: ->
+    events = new Events
+    events.on 'test', => @varOne = not @default
     events.off 'test'
     events.trigger 'test'
-    equal @variable, @default
-
-  # TODO: Test event mapping functionality
+    equal @varOne, @default
 
 TestEvents

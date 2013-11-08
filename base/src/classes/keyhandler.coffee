@@ -9,10 +9,8 @@
 ###
 
 
-define ['classes/events'], (Events) -> class KeyHandler extends Events
+define ['./events'], (Events) -> class KeyHandler extends Events
 
-  constructor: ->
-    # TODO: Bind to keypress event
   keys:
     8:'backspace', 9:'tab', 13:'enter', 16:'shift', 17:'ctrl', 18:'alt', 
     37:'left', 38:'up', 39:'right', 40:'down',
@@ -29,5 +27,12 @@ define ['classes/events'], (Events) -> class KeyHandler extends Events
     # Numpad
     96:'num0', 97:'num1', 98:'num2', 99:'num3', 100:'num4', 101:'num5',
     102:'num6', 103:'num7', 104:'num8', 105:'num9'
+  handler: (event) -> @fire keys[event.keyCode] if not /input|textarea|select/i.test((event.target or event.srcElement).nodeName)
+  off: (name) -> 
+    @unbind document, 'keyup', @handler
+    super name
+  on: (name, fn) ->
+    @bind document, 'keyup', @handler
+    super name, fn
 
 KeyHandler

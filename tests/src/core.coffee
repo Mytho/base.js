@@ -9,6 +9,11 @@
   Copyright (c) 2013 Teun Zengerink
 ###
 
+require.config window.BASE.config
+
 requirejs [
-  'classes/test/events'
-], (tests...) -> (new Test).run() for Test in tests
+  'tests/test/events',
+  'tests/test/keyhandler',
+  'tests/test/url',
+], (tests...) -> 
+  (new Test).runAll() for Test in tests

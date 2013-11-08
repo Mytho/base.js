@@ -18,10 +18,8 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         clean: {
-          beforeBase: ['<%= cnf.base.lib %>/*'],
-          beforeTests: ['<%= cnf.tests.lib %>/*'],
-          afterBase: ['<%= cnf.base.build %>/*'],
-          afterTests: ['<%= cnf.tests.build %>/*']
+          base: ['<%= cnf.base.lib %>/*', '<%= cnf.base.build %>/*'],
+          tests: ['<%= cnf.tests.lib %>/*', '<%= cnf.tests.build %>/*']
         },
 
         coffee: {
@@ -29,7 +27,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.base.src %>/',
-                    src: ['*.coffee', '**/*.coffee'],
+                    src: ['**/*.coffee'],
                     dest: '<%= cnf.base.build %>/',
                     ext: '.js'
                 }]
@@ -38,7 +36,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.tests.src %>/',
-                    src: ['*.coffee', '**/*.coffee'],
+                    src: ['**/*.coffee', '!example.config.coffee'],
                     dest: '<%= cnf.tests.build %>/',
                     ext: '.js'
                 }]
@@ -53,7 +51,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.base.build %>/',
-                    src: ['*.js', '**/*.js'],
+                    src: ['**/*.js'],
                     dest: '<%= cnf.base.lib %>/'
                 }]
             },
@@ -61,7 +59,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= cnf.tests.build %>/',
-                    src: ['*.js', '**/*.js'],
+                    src: ['**/*.js'],
                     dest: '<%= cnf.tests.lib %>/'
                 }]
             }
@@ -70,11 +68,11 @@ module.exports = function(grunt) {
         watch: {
             base: {
                 files: ['<%= cnf.base.src %>/**/*.coffee'],
-                tasks: ['clean:beforeBase', 'coffee:base', 'uglify:base', 'clean:afterBase']
+                tasks: ['clean:base', 'coffee:base', 'uglify:base']
             },
             tests: {
                 files: ['<%= cnf.tests.src %>/**/*.coffee'],
-                tasks: ['coffee:tests', 'uglify:tests', 'clean:afterTests']
+                tasks: ['clean:tests', 'coffee:tests', 'uglify:tests']
             }
         }
 
@@ -85,7 +83,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['clean:beforeBase', 'clean:beforeTests', 'coffee', 'uglify',
-                                   'clean:afterBase', 'clean:afterTests']);
+    grunt.registerTask('default', ['clean', 'coffee', 'uglify']);
 
 };
