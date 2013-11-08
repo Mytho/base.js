@@ -12,11 +12,12 @@
 
 define -> class Test
 
+  name: 'Test'
   regex: /^test.*$/
   run: (name) ->
     if name.match @regex
       @setUp()
-      test(name, => @[name]())
+      test("#{@name}::#{name}", => @[name]())
       @tearDown()
   runAll: -> @run(name) for name of @
   setUp: -> false
