@@ -7,8 +7,8 @@
 ###
 
 define [
-  '../../classes/test',
-  '../../../../base/lib/classes/url',
+  'tests/test',
+  'classes/url',
 ], (
   Test,
   Url

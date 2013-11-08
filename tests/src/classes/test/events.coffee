@@ -7,8 +7,8 @@
 ###
 
 define [
-  '../../classes/test',
-  '../../../../base/lib/classes/events',
+  'tests/test',
+  'classes/events',
 ], (
   Test,
   Events

@@ -7,8 +7,8 @@
 ###
 
 define [
-  '../../classes/test',
-  '../../../../base/lib/classes/keyhandler',
+  'tests/test',
+  'classes/keyhandler',
 ], (
   Test,
   KeyHandler
