@@ -34,10 +34,8 @@ define [
         mouseenter: => @varOne = 'some-test-string'
         mouseleave: => @varTwo = 'some-test-string'
       )
-      .fire(el, 'mouseenter')
-      .fire(el, 'mouseleave')
-      .unbind(el, 'mouseenter')
-      .unbind(el, 'mouseleave')
+      .fire(el, ['mouseenter', 'mouseleave'])
+      .unbind(el, ['mouseenter', 'mouseleave'])
     equal @varOne, 'some-test-string'
     equal @varTwo, 'some-test-string'
   testUnbind: ->
@@ -58,10 +56,8 @@ define [
         testOne: => @varOne = 'some-test-string'
         testTwo: => @varTwo = 'some-test-string'
       )
-      .trigger('testOne')
-      .trigger('testTwo')
-      .off('testOne')
-      .off('testTwo')
+      .trigger(['testOne', 'testTwo'])
+      .off(['testOne', 'testTwo'])
     equal @varOne, 'some-test-string'
     equal @varTwo, 'some-test-string'
   testOff: ->
