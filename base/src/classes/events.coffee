@@ -18,17 +18,20 @@ define -> class Events
   # List of PubSub events.
   _events: {}
 
-  # Map an object of 'name/function'-pair events.
-  _mapOn: (map) -> @on(name, fn) for name, fn of map
-  _mapTrigger: (names, args...) -> @trigger(name, args) for name in names
-  _mapOff: (names) -> @off(name) for name in names
-  _mapBind: (element, map) -> @bind(element, name, fn) for name, fn of map
-  _mapFire: (element, names) -> @fire(element, name) for name in names
-  _mapUnbind: (element, names) -> @unbind(element, name) for name in names
+  _mapPubSub: (method, obj, args...) ->
+    if Object::toString.call(obj) is '[object Array]'
+      method.apply(@, [name, args]) for name in obj
+    else
+      method.apply(@, [name, fn, args]) for name, fn of obj
+  _mapEvents: (method, element, obj, args...) ->
+    if Object::toString.call(obj) is '[object Array]'
+      method.apply(@, [element, name, args]) for name in obj
+    else
+      method.apply(@, [element, name, fn, args]) for name, fn of obj
 
   # Add options to bind events to elements.
   bind: (element, name, fn) ->
-    @_mapBind element, name if typeof name is 'object'
+    @_mapEvents(@bind, element, name) if typeof name is 'object'
     @_handlers[element] = {} if typeof @_handlers[element] is 'undefined'
     @_handlers[element][name] = [] if typeof @_handlers[element][name] is 'undefined'
     @_handlers[element][name].push fn
@@ -38,12 +41,12 @@ define -> class Events
       element.attachEvent "on#{name}", fn
     @
   fire: (element, name, args...) ->
-    @_mapFire(element, name) if typeof name is 'object'
+    @_mapEvents(@fire, element, name) if typeof name is 'object'
     if @_handlers[element] and @_handlers[element][name]
       fn.apply(@, args) for fn in @_handlers[element][name]
     @
   unbind: (element, name) ->
-    @_mapUnbind(element, name) if typeof name is 'object'
+    @_mapEvents(@unbind, element, name) if typeof name is 'object'
     if @_handlers[element] and @_handlers[element][name]
       for fn in @_handlers[element][name]
         if element.removeEventListener
@@ -55,17 +58,17 @@ define -> class Events
 
   # Add simple PubSub-functionality to the class.
   off: (name) ->
-    @_mapOff(name) if typeof name is 'object'
+    @_mapPubSub(@off, name) if typeof name is 'object'
     @_events[name] = []
     @
   on: (name, fn) ->
-    @_mapOn(name) if typeof name is 'object'
+    @_mapPubSub(@on, name) if typeof name is 'object'
     @_events[name] = [] if typeof @_events[name] is 'undefined'
     @_events[name].push fn
     @
   trigger: (name, args...) ->
     if typeof name is 'object'
-      @_mapTrigger(name, args) 
+      @_mapPubSub(@trigger, name, args)
     else
       fn.apply(@, args) for fn in @_events[name]
     @

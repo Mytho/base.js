@@ -53,12 +53,12 @@ define [
   testOnMap: ->
     (new Events)
       .on(
-        testOne: => @varOne = 'some-test-string'
+        testOne: (arg) => @varOne = arg
         testTwo: => @varTwo = 'some-test-string'
       )
-      .trigger(['testOne', 'testTwo'])
+      .trigger(['testOne', 'testTwo'], 'some-test-param')
       .off(['testOne', 'testTwo'])
-    equal @varOne, 'some-test-string'
+    equal @varOne, 'some-test-param'
     equal @varTwo, 'some-test-string'
   testOff: ->
     events = new Events
