@@ -25,5 +25,3 @@ define [
     equal cookie.get(@key), 'someSampleValue'
     equal cookie.del(@key), true
     equal cookie.get(@key), null
-
-TestCookie

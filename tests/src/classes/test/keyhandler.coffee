@@ -31,5 +31,3 @@ define [
     keyHandler.off 'space'
     keyHandler.trigger 'space'
     equal @variable, @default
-
-TestKeyHandler

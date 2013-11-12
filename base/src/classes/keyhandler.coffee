@@ -34,5 +34,3 @@ define ['./events'], (Events) -> class KeyHandler extends Events
   on: (name, fn) ->
     @bind document, 'keyup', @handler
     super name, fn
-
-KeyHandler

@@ -22,5 +22,3 @@ define -> class Test
   runAll: -> @run(name) for name of @
   setUp: -> false
   tearDown: -> false
-
-Test

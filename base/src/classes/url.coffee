@@ -21,5 +21,3 @@ define -> class Url
 
   # Get a full application URL for a given URI.
   site: (uri, protocol) -> "#{@base protocol}#{@__normalize uri}"
-
-Url
