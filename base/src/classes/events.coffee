@@ -69,5 +69,3 @@ define -> class Events
     else
       fn.apply(@, args) for fn in @__events[name]
     @
-
-Events

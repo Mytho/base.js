@@ -66,5 +66,3 @@ define [
     events.off 'test'
     events.trigger 'test'
     equal @varOne, @default
-
-TestEvents
