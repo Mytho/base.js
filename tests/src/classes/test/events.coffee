@@ -21,45 +21,43 @@ define [
   setUp: -> @varOne = @varTwo = @default
 
   testBind: ->
-    events = new Events
     el = document.getElementsByTagName('html')[0]
-    events.bind el, 'click', (arg) => @varOne = arg
-    events.fire el, 'click', 'some-test-string'
-    events.unbind el, 'click'
+    (new Events)
+      .bind(el, 'click', (arg) => @varOne = arg)
+      .fire(el, 'click', 'some-test-string')
+      .unbind(el, 'click')
     equal @varOne, 'some-test-string'
   testBindMap: ->
-    events = new Events
-    element = document.getElementsByTagName('html')[0]
-    events.bind element,
-      mouseenter: => @varOne = 'some-test-string'
-      mouseleave: => @varTwo = 'some-test-string'
-    events.fire element, 'mouseenter'
-    events.fire element, 'mouseleave'
-    events.unbind element, 'mouseenter'
-    events.unbind element, 'mouseleave'
+    el = document.getElementsByTagName('html')[0]
+    (new Events)
+      .bind(el,
+        mouseenter: => @varOne = 'some-test-string'
+        mouseleave: => @varTwo = 'some-test-string'
+      )
+      .fire(el, ['mouseenter', 'mouseleave'])
+      .unbind(el, ['mouseenter', 'mouseleave'])
     equal @varOne, 'some-test-string'
     equal @varTwo, 'some-test-string'
   testUnbind: ->
-    events = new Events
     el = document.getElementsByTagName('html')[0]
-    events.bind el, 'click', => @varOne = not @default
-    events.unbind el, 'click'
-    events.fire el, 'click'
+    (new Events)
+      .bind(el, 'click', => @varOne = not @default)
+      .unbind(el, 'click')
+      .fire(el, 'click')
     equal @varOne, @default
   testOn: ->
-    events = new Events
-    events.on 'test', (arg) => @varOne = arg
-    events.trigger 'test', 'some-test-string'
-    equal @varOne, 'some-test-string' 
+    (new Events)
+      .on('test', (arg) => @varOne = arg)
+      .trigger('test', 'some-test-string')
+    equal @varOne, 'some-test-string'
   testOnMap: ->
-    events = new Events
-    events.on
-      testOne: => @varOne = 'some-test-string'
-      testTwo: => @varTwo = 'some-test-string'
-    events.trigger 'testOne'
-    events.trigger 'testTwo'
-    events.off 'testOne'
-    events.off 'testTwo'
+    (new Events)
+      .on(
+        testOne: => @varOne = 'some-test-string'
+        testTwo: => @varTwo = 'some-test-string'
+      )
+      .trigger(['testOne', 'testTwo'])
+      .off(['testOne', 'testTwo'])
     equal @varOne, 'some-test-string'
     equal @varTwo, 'some-test-string'
   testOff: ->

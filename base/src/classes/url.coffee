@@ -2,7 +2,8 @@
   Url
   ---
 
-  Class that assists in creating the correct Url for any environment.
+  Class that assists in creating the correct URL for any environment based on
+  the requirejs config variable.
 
   Licensed under MIT license
   Copyright (c) 2013 Teun Zengerink

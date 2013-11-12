@@ -12,6 +12,7 @@
 require.config window.BASE.config
 
 requirejs [
+  'tests/test/cookie',
   'tests/test/events',
   'tests/test/keyhandler',
   'tests/test/url',
