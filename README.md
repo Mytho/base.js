@@ -1,7 +1,7 @@
 BASE
 ====
 
-Core classes for use within your Require.js modularized application.
+Some helper classes for use within your Require.js modularized application.
 
 Tests
 -----
