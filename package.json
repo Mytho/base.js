@@ -6,6 +6,10 @@
         "name": "Teun Zengerink",
         "email": "t.zengerink@gmail.com"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Mytho/base.js.git"
+    },
     "license": "MIT",
     "scripts": {
         "preinstall": "npm install -g grunt-cli"
