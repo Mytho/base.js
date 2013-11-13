@@ -12,7 +12,7 @@
 define -> class Url
 
   # Strip leading and trailing slashes of a given string.
-  __normalize: (str) -> str.replace /^\/|\/$/g, ''
+  _normalize: (str) -> str.replace /^\/|\/$/g, ''
 
   # Get the base URL for the application.
   base: (protocol = '') ->
@@ -20,4 +20,4 @@ define -> class Url
     "#{protocol}://#{window.location.host}#{require.toUrl ''}"
 
   # Get a full application URL for a given URI.
-  site: (uri, protocol) -> "#{@base protocol}#{@__normalize uri}"
+  site: (uri, protocol) -> "#{@base protocol}#{@_normalize uri}"
